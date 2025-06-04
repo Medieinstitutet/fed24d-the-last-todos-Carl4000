@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from 'react';
 import { Task } from '../models/Task';
+import './TodoList.css';
 
 export const TodoList = () => {
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -10,9 +11,9 @@ export const TodoList = () => {
       return localDataParsed.map((t: Task) => new Task(t.id, t.task, t.done));
     } else {
       return [
-        new Task(1, 'Koda', false),
-        new Task(2, 'Felsöka', false),
-        new Task(3, 'Tvätta bilen', false),
+        new Task(1, 'Lots of React coding', false),
+        new Task(2, 'Understand reducers', false),
+        new Task(3, 'Focus on destructuring', false),
       ];
     }
   });
@@ -45,22 +46,28 @@ export const TodoList = () => {
 
   return (
     <>
-      <ul>
-        {tasks.map((t) => (
-          <li key={t.id}>
-            <h4>{t.task}</h4>
-            Done:{' '}
-            <input
-              type="checkbox"
-              checked={t.done}
-              onChange={handleChange}
-              id={String(t.id)}
-            />
-            <br></br>
-            <button onClick={() => removeTask(t.id)}>Ta bort</button>
-          </li>
-        ))}
-      </ul>
+      <div className="wrapper">
+        <h3>My little todo list</h3>
+        <ul className="task-list">
+          {tasks.map((t) => (
+            <li className="task-item" key={t.id}>
+               <div className="task"><h2>{t.task}</h2></div>
+              <div className="task-operator">
+                <label>
+                Mark as done:
+                <input
+                  type="checkbox"
+                  checked={t.done}
+                  onChange={handleChange}
+                  id={String(t.id)}
+                />
+              </label>
+              <button onClick={() => removeTask(t.id)}>Remove task</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
